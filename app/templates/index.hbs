@@ -1,0 +1,22 @@
+{{outlet}}
+{{#link-to 'login' class="button"}}
+  Click to Login
+{{/link-to}}
+<div class="jumbo">
+  <div class="right tomster"></div>
+  <h2>Upload Video</h2>
+  {{video-upload saveVideo=(action "saveVideo")}}
+</div>
+<div class="col-xs-12">
+  {{#each model as |post|}}
+    <div class="col-xs-3">
+      {{post.id}}
+    </div>
+    <div class="col-xs-3">
+      {{post.description}}
+    </div>
+    <div class="col-xs-3">
+      {{post.video}}
+    </div>
+  {{/each}}
+</div>

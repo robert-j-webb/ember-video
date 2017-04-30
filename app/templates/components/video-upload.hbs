@@ -1,0 +1,41 @@
+<section class="experiment" style="padding: 5px;">
+  <p>Max video time is 3 seconds.</p>
+  <br>
+  <br>
+
+  <button {{action 'start' }} disabled={{isNotRecording}}>Start</button>
+  <button {{action 'stop' }} disabled={{isRecording}}>Stop</button>
+  <button {{action 'pause'}}disabled={{isRecording}}>Pause</button>
+  <button {{action 'resume'}}disabled={{isRecording}}>Resume</button>
+  <button {{action 'save'}}disabled={{isRecording}}>Save</button>
+
+  <br>
+  <br>
+
+  <p>Error: {{error}}</p>
+</section>
+
+<section class="experiment">
+  <div id="videos-container">
+  </div>
+</section>
+
+<style>
+  input {
+    border: 1px solid rgb(46, 189, 235);
+    border-radius: 3px;
+    font-size: 1em;
+    outline: none;
+    padding: .2em .4em;
+    width: 60px;
+    text-align: center;
+  }
+  select {
+    vertical-align: middle;
+    line-height: 1;
+    padding: 2px 5px;
+    height: auto;
+    font-size: inherit;
+    margin: 0;
+  }
+</style>

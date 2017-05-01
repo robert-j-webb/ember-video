@@ -1,52 +1,11 @@
-# ember-quickstart
+# Video Recording Social Platform
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+Hi, I'm trying out Ember for the first time by making a website where you can post video and comment on that video entirely in video.
 
-## Prerequisites
+Right now I'm focusing on getting video uploading working and testing it. The issue I have right now is I am having trouble figuring out how to test the .catch of a promise.
 
-You will need the following things properly installed on your computer.
+Here's the test: tests/integration/components/video-upload-test.js
 
-* [Git](https://git-scm.com/)
-* [Node.js](https://nodejs.org/) (with NPM)
-* [Bower](https://bower.io/)
-* [Ember CLI](https://ember-cli.com/)
-* [PhantomJS](http://phantomjs.org/)
+Here's the component: app/components/video-upload.js
 
-## Installation
-
-* `git clone <repository-url>` this repository
-* `cd ember-quickstart`
-* `npm install`
-* `bower install`
-
-## Running / Development
-
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
-
-### Code Generators
-
-Make use of the many generators for code, try `ember help generate` for more details
-
-### Running Tests
-
-* `ember test`
-* `ember test --server`
-
-### Building
-
-* `ember build` (development)
-* `ember build --environment production` (production)
-
-### Deploying
-
-Specify what it takes to deploy your app.
-
-## Further Reading / Useful Links
-
-* [ember.js](http://emberjs.com/)
-* [ember-cli](https://ember-cli.com/)
-* Development Browser Extensions
-  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
+Let me know if you have any ideas what I'm doing wrong, or if you have general tips about my approach.

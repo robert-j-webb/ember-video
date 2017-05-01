@@ -1,9 +1,11 @@
+
+{{yield}}
 <section class="experiment" style="padding: 5px;">
   <p>Max video time is 3 seconds.</p>
   <br>
   <br>
 
-  <button {{action 'start' }} disabled={{isNotRecording}}>Start</button>
+  <button {{action 'start' }} disabled={{isNotRecording}} id="start">Start</button>
   <button {{action 'stop' }} disabled={{isRecording}}>Stop</button>
   <button {{action 'pause'}}disabled={{isRecording}}>Pause</button>
   <button {{action 'resume'}}disabled={{isRecording}}>Resume</button>
@@ -12,7 +14,7 @@
   <br>
   <br>
 
-  <p>Error: {{error}}</p>
+  <p id="error">Error: {{error}}</p>
 </section>
 
 <section class="experiment">

@@ -33,13 +33,33 @@ export default Ember.Component.extend({
     }
     return mergein;
   },
+  startRecording(recorder, width, height){
+    this.mediaRecorder = recorder;
+    let recorderType = this.get('recorderType');
+    if (recorderType === 'MediaRecorder API') {
+      this.mediaRecorder.recorderType = msr.MediaRecorderWrapper;
+    }
+    if (recorderType === 'WebP encoding into WebM') {
+      this.mediaRecorder.recorderType = msr.WhammyRecorder;
+    }
+    // don't force any mimeType; use above "recorderType" instead.
+    // this.mediaRecorder.mimeType = 'video/webm'; // video/webm or video/mp4
+    this.mediaRecorder.videoWidth = width;
+    this.mediaRecorder.videoHeight = height;
+    this.mediaRecorder.ondataavailable = (blob) => {
+      this.videoBlob.blob.addObject(blob);
+    };
+    var timeInterval = 3 * 1000;
+    // get blob after specific time interval
+    this.mediaRecorder.start(timeInterval);
+  },
   actions: {
     start(){
+      // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
       navigator.mediaDevices.getUserMedia({
         audio: true, // record both audio/video in Firefox/Chrome
         video: true
       }).then((stream) => {
-
           this.toggleProperty('isRecording');
           this.toggleProperty('isNotRecording');
           let videosContainer = document.getElementById('videos-container');
@@ -56,27 +76,11 @@ export default Ember.Component.extend({
           video.play();
           videosContainer.appendChild(video);
           videosContainer.appendChild(document.createElement('hr'));
-          this.mediaRecorder = new MediaStreamRecorder(stream);
-          this.mediaRecorder.stream = stream;
-          let recorderType = this.get('recorderType');
-          if (recorderType === 'MediaRecorder API') {
-            this.mediaRecorder.recorderType = msr.MediaRecorderWrapper;
-          }
-          if (recorderType === 'WebP encoding into WebM') {
-            this.mediaRecorder.recorderType = msr.WhammyRecorder;
-          }
-          // don't force any mimeType; use above "recorderType" instead.
-          // this.mediaRecorder.mimeType = 'video/webm'; // video/webm or video/mp4
-          this.mediaRecorder.videoWidth = videoWidth;
-          this.mediaRecorder.videoHeight = videoHeight;
-          this.mediaRecorder.ondataavailable =  (blob) => {
-            this.videoBlob.blob.addObject(blob);
-          };
-          var timeInterval = 3 * 1000;
-          // get blob after specific time interval
-          this.mediaRecorder.start(timeInterval);
+          let recorder = new MediaStreamRecorder(stream);
+          recorder.stream = stream;
+          this.startRecording(recorder);
         }
-      ).catch((e) => this.set('error', e));
+      ).catch((e) => {console.log(e);this.set('error', e)});
     },
     stop(){
       this.toggleProperty('isRecording');

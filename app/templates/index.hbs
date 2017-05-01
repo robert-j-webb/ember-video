@@ -7,7 +7,7 @@
   <h2>Upload Video</h2>
   {{video-upload saveVideo=(action "saveVideo")}}
 </div>
-<div class="col-xs-12">
+<div id="posts" class="col-xs-12">
   {{#each model as |post|}}
     <div class="col-xs-3">
       {{post.id}}

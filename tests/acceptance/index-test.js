@@ -10,9 +10,18 @@ test('visiting /', function(assert) {
     assert.equal(currentURL(), '/');
   });
 });
-// test('Feed should show up', function (assert) {
-// });
-//
+test('Feed should show up', function (assert) {
+  visit('/');
+
+  andThen(function() {
+    andThen(() => assert.equal(find('#posts > div:nth-child(1)').text(),
+      `
+      -Kj-OJU3cac76Dm0XUIp
+    `
+    ));
+  });
+});
+
 // test('Feed should have posts in it.', function (assert) {
 // });
 // test('Should be able to upload video', function (assert) {

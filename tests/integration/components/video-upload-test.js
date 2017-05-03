@@ -2,7 +2,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
-
 moduleForComponent('video-upload', 'Integration | Component | video upload', {
   integration: true
 });
@@ -33,6 +32,23 @@ test('start appends a video', function(assert) {
     assert.notEqual(this.$('video'), null);
   });
 });
+
+
+test('records video', function(assert) {
+
+  this.render(hbs`{{video-upload}}`);
+  this.$('#start').click();
+
+  this.$('#save').click();
+  this.set('success', (value) => {
+    assert.equal(value, `Recorded a video of length 3`);
+  });
+
+  return wait().then(()=>{
+    assert.equal(this.$('#success').text(), `Recorded a video of length 3`);
+  });
+});
+
 /**
  * This test is failing... I can't figure out why. Refer to
  * app/components/video-upload.js with the start function to see what's going on.

@@ -6,14 +6,14 @@
   <br>
 
   <button {{action 'start' }} disabled={{isNotRecording}} id="start">Start</button>
-  <button {{action 'stop' }} disabled={{isRecording}}>Stop</button>
+  <button {{action 'stop' }} disabled={{isRecording}} id="stop">Stop</button>
   <button {{action 'pause'}}disabled={{isRecording}}>Pause</button>
   <button {{action 'resume'}}disabled={{isRecording}}>Resume</button>
-  <button {{action 'save'}}disabled={{isRecording}}>Save</button>
+  <button {{action 'save'}}disabled={{isRecording}} id="save">Save</button>
 
   <br>
   <br>
-
+  <p id="result">{{success}}</p>
   <p id="error">Error: {{error}}</p>
 </section>
 

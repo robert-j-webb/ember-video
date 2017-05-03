@@ -14,19 +14,9 @@ export default Ember.Component.extend({
   videoBlob: Ember.Object.create({
     "blob": Ember.A([])
   }),
-  bytesToSize(bytes) {
-    var k = 1000;
-    var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-    if (bytes === 0) return '0 Bytes';
-    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(k)), 10);
-    return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];
-  },
-  getTimeLength(milliseconds) {
-    var data = new Date(milliseconds);
-    return data.getUTCHours() + " hours, " + data.getUTCMinutes() + " minutes and " + data.getUTCSeconds() + " second(s)";
-  },
+  success: '',
   mergeProps(mergein, mergeto) {
-    for (var t in mergeto) {
+    for (let t in mergeto) {
       if (typeof mergeto[t] !== 'function') {
         mergein[t] = mergeto[t];
       }
@@ -78,7 +68,7 @@ export default Ember.Component.extend({
           videosContainer.appendChild(document.createElement('hr'));
           let recorder = new MediaStreamRecorder(stream);
           recorder.stream = stream;
-          this.startRecording(recorder);
+        Ember.run(() => this.startRecording(recorder));
         }
       ).catch((e) => {console.log(e);this.set('error', e)});
     },
@@ -99,6 +89,7 @@ export default Ember.Component.extend({
       this.toggleProperty('isNotRecording');
       this.mediaRecorder.stop();
       this.get('saveVideo')(this.videoBlob.blob.toArray());
+      this.set('success',`Recorded a video of length ${this.videoBlob.blob.length * 3}`)
       this.mediaRecorder.stream.stop();
     }
   }

@@ -4,45 +4,28 @@ export default Ember.Controller.extend({
   firebaseApp: Ember.inject.service(),
   storageRef: null,
   uploadPath: null,
-  numBlobsLeft: 0,
-  blobRecords: Ember.Object.create({
-    "blob": Ember.A([])
-  }),
   progress: null,
   init:function(){
     this.set('storageRef', this.get('firebaseApp').storage().ref());
-    this.set('uploadPath', this.get('storageRef').child('posts/'));
+    this.set('uploadPath', this.get('storageRef').child('posts/' + Math.random().toString(36).substring(7) + '.webm'));
   },
-  upload(raw, metadata){
+  upload(raw, metadata,finished){
     let uploadTask = this.get('uploadPath').put(raw, {contentType: metadata});
-    uploadTask.on('state_changed', (snapshot) => {
+    uploadTask.on('state_changed', (snapshot) => Ember.run(()=>{
       this.set('progress', (snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-    }, (error) => {
+    }), (error) => {
       throw error;
     }, () => {
-      this.blobRecords.blob.addObject(this.get('store').createRecord('blob', {
-        url: uploadTask.snapshot.downloadURL,
-        metadata: metadata
-      }));
-      this.decrementProperty('numBlobsLeft');
-      this.set('progress', 100);
+      finished(uploadTask.snapshot.downloadURL);
     });
   },
   actions: {
-    saveVideo(blobArray){
+    saveVideo(blob){
       let store = this.get('store');
-      this.set('numBlobsLeft', blobArray.length);
-      blobArray.forEach((rawBlob) => {
-        this.upload(rawBlob, rawBlob.type);
-      });
-      //Constantly check until all blobs are uploaded. Then we're done uploading.
-      let interval = setInterval(()=>{
-        if(this.get('numBlobsLeft') == 0){
-          let post = store.createRecord('post', {blobs: this.blobRecords.blob.toArray()});
-          post.save();
-          clearInterval(interval);
-        }
-      },500);
+      this.upload(blob, blob.type,(url)=>Ember.run(()=>{
+        let post = store.createRecord('post', {videoUrl: url});
+        post.save();
+      }));
     }
   }
 });

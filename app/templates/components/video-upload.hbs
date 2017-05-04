@@ -1,12 +1,11 @@
 
 {{yield}}
 <section class="experiment" style="padding: 5px;">
-  <p>Max video time is 3 seconds.</p>
+  <p>Max video length is 30 seconds</p>
   <br>
   <br>
 
   <button {{action 'start' }} disabled={{isNotRecording}} id="start">Start</button>
-  <button {{action 'stop' }} disabled={{isRecording}} id="stop">Stop</button>
   <button {{action 'pause'}}disabled={{isRecording}}>Pause</button>
   <button {{action 'resume'}}disabled={{isRecording}}>Resume</button>
   <button {{action 'save'}}disabled={{isRecording}} id="save">Save</button>
@@ -14,11 +13,14 @@
   <br>
   <br>
   <p id="result">{{success}}</p>
+  {{#if error}}
   <p id="error">Error: {{error}}</p>
+  {{/if}}
 </section>
 
 <section class="experiment">
   <div id="videos-container">
+    <video id="recording-video" class="{{if isRecording 'active' 'hidden'}}"></video>
   </div>
 </section>
 

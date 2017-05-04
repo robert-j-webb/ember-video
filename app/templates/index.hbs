@@ -6,6 +6,7 @@
   <div class="right tomster"></div>
   <h2>Upload Video</h2>
   {{video-upload saveVideo=(action "saveVideo")}}
+  {{progress}}
 </div>
 <div id="posts" class="col-xs-12">
   {{#each model as |post|}}
@@ -13,10 +14,9 @@
       {{post.id}}
     </div>
     <div class="col-xs-3">
-      {{post.description}}
-    </div>
-    <div class="col-xs-3">
-      {{post.video}}
+      <video src="{{post.videoUrl}}" autoplay loop="true">
+      Attempting to load video
+      </video>
     </div>
   {{/each}}
 </div>

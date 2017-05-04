@@ -68,3 +68,9 @@
   -ms-filter: invert(1);
   filter: invert(1);
 }
+.active{
+  display: parent;
+}
+.hidden{
+  display: none;
+}

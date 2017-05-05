@@ -1,13 +1,10 @@
 import Ember from 'ember';
-import msr from 'npm:msr';
-import MediaStreamRecorder from 'npm:msr';
-
+/* global MediaRecorder  */
 export default Ember.Component.extend({
   isRecording: true,
   isNotRecording: false,
-  videoHeight: 240,
-  videoWidth: 320,
-  recorderType: 'WebP encoding into WebM',
+  videoHeight: 480,
+  videoWidth: 640,
   mediaRecorder: null,
   index: 1,
   error: '',
@@ -15,14 +12,6 @@ export default Ember.Component.extend({
     "blob": Ember.A([])
   }),
   success: '',
-  mergeProps(mergein, mergeto) {
-    for (let t in mergeto) {
-      if (typeof mergeto[t] !== 'function') {
-        mergein[t] = mergeto[t];
-      }
-    }
-    return mergein;
-  },
   concatenateBlobs(blobs, type, callback) {
     var buffers = [];
 
@@ -68,87 +57,85 @@ export default Ember.Component.extend({
       callback(blob);
     }
   },
-  startRecording(recorder, width, height){
-    this.mediaRecorder = recorder;
-    let recorderType = this.get('recorderType');
-    if (recorderType === 'MediaRecorder API') {
-      this.mediaRecorder.recorderType = msr.MediaRecorderWrapper;
+  startRecording(stream){
+    this.videoBlob.blob = Ember.A([]);
+    let options = {mimeType: 'video/webm;codecs=vp9'};
+    if (!MediaRecorder['isTypeSupported'](options.mimeType)) {
+      console.log(options.mimeType + ' is not Supported');
+      options = {mimeType: 'video/webm;codecs=vp8'};
+      if (!MediaRecorder['isTypeSupported'](options.mimeType)) {
+        console.log(options.mimeType + ' is not Supported');
+        options = {mimeType: 'video/webm'};
+        if (!MediaRecorder['isTypeSupported'](options.mimeType)) {
+          console.log(options.mimeType + ' is not Supported');
+          options = {mimeType: ''};
+        }
+      }
     }
-    if (recorderType === 'WebP encoding into WebM') {
-      this.mediaRecorder.recorderType = msr.WhammyRecorder;
+    let mediaRecorder = null;
+    try {
+      mediaRecorder = new MediaRecorder(stream, options);
+    } catch (e) {
+      console.error('Exception while creating MediaRecorder: ' + e);
+      this.set('error',e);
+      return;
     }
-    // don't force any mimeType; use above "recorderType" instead.
-    // this.mediaRecorder.mimeType = 'video/webm'; // video/webm or video/mp4
-    this.mediaRecorder.videoWidth = width;
-    this.mediaRecorder.videoHeight = height;
-    this.mediaRecorder.ondataavailable = (blob) => {
-      Ember.run(() => {
-        this.videoBlob.blob.addObject(blob);
-        this.actions.save();
-      });
-    };
-    let timeInterval = 30 * 1000;
-    // get blob after specific time interval
-    this.mediaRecorder.start(timeInterval);
+    mediaRecorder.ondataavailable = (blob)=>this.handleDataAvailable(blob);
+    mediaRecorder.start(10); // collect 10ms of data
+    this.set('mediaRecorder', mediaRecorder);
+  },
+  handleSuccess(stream){
+    this.toggleProperty('isRecording');
+    this.toggleProperty('isNotRecording');
+    let videosContainer = document.getElementById('videos-container');
+    let video = document.createElement('video');
+    let videoWidth = this.get('videoWidth');
+    let videoHeight = this.get('videoHeight');
+    video.controls = false;
+    video.muted = false;
+    video.width = videoWidth;
+    video.height = videoHeight;
+    if (window.URL) {
+      video.srcObject = stream;
+    } else {
+      video.src = stream;
+    }
+    video.play();
+    videosContainer.appendChild(video);
+    Ember.run(() => this.startRecording(stream));
+  },
+  handleDataAvailable(event) {
+    if (event.data && event.data.size > 0) {
+      this.videoBlob.blob.push(event.data);
+    }
   },
   actions: {
     start(){
-
-      // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
       navigator['mediaDevices'].getUserMedia({
         audio: true, // record both audio/video in Firefox/Chrome
-        video: true
-      }).then((stream) => {
-          this.toggleProperty('isRecording');
-          this.toggleProperty('isNotRecording');
-          let videosContainer = document.getElementById('videos-container');
-          let video = document.createElement('video');
-          let videoWidth = this.get('videoWidth');
-          let videoHeight = this.get('videoHeight');
-          video = this.mergeProps(video, {
-            controls: true,
-            muted: false,
-            width: videoWidth,
-            height: videoHeight,
-            src: URL['createObjectURL'](stream)
-          });
-          video.play();
-          videosContainer.appendChild(video);
-          let recorder = new MediaStreamRecorder(stream);
-          recorder.stream = stream;
-          Ember.run(() => this.startRecording(recorder));
-        }
-      ).catch((e) => {
+        video: {width: {exact: 640}, height: {exact: 480}}
+      }).
+      then((stream)=>this.handleSuccess(stream)).catch((e) => {
         console.log(e);
         this.set('error', e)
       });
     },
-    pause(){
-      this.mediaRecorder.pause();
-    },
-    resume(){
-      this.mediaRecorder.resume();
+    cancel(){
+      this.mediaRecorder.stop();
     },
     save(){
       this.toggleProperty('isRecording');
       this.toggleProperty('isNotRecording');
       Ember.run(() => {
         this.mediaRecorder.stop();
-        this.mediaRecorder.stream.stop();
         let videoContainer = document.getElementById('videos-container');
         while (videoContainer.hasChildNodes()) {
           videoContainer.removeChild(videoContainer.lastChild);
         }
-        Ember.run.later(() => {
-          //see node_modules/msr/common/ConcatenateBlobs.js
-          this.concatenateBlobs(this.videoBlob.blob.toArray(), this.videoBlob.blob.objectAt(0).type,
-            (blobs) =>
-              Ember.run(() =>
-                this.get('saveVideo')(blobs)
-              )
-          );
-          this.set('success', `Recorded a video of length ${this.videoBlob.blob.length * 1}`);
-        }, 1000);
+        Ember.run(() => {
+          this.get('saveVideo')(new Blob(this.videoBlob.blob.toArray(), {type: 'video/webm'}));
+          this.set('success', `Recorded a video of length ${this.videoBlob.blob.length / 100}`);
+        });
       });
     }
   }

@@ -7,7 +7,10 @@ export default Ember.Controller.extend({
   progress: null,
   init:function(){
     this.set('storageRef', this.get('firebaseApp').storage().ref());
-    this.set('uploadPath', this.get('storageRef').child('posts/' + Math.random().toString(36).substring(7) + '.webm'));
+    this.set('uploadPath', this.get('storageRef').child('posts/v' + Math.random().toString(36).substring(7) + '.webm'));
+    Ember.run.scheduleOnce('afterRender', this, () =>
+      Ember.$.getScript('https://webrtc.github.io/adapter/adapter-latest.js')
+    );
   },
   upload(raw, metadata,finished){
     let uploadTask = this.get('uploadPath').put(raw, {contentType: metadata});

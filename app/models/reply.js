@@ -1,5 +1,7 @@
 import DS from 'ember-data';
 
+const path = "replies/";
+
 export default DS.Model.extend({
-  videoUrl: DS.attr('string')
+  video: DS.belongsTo('video')
 });

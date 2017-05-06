@@ -1,6 +1,6 @@
 /* eslint-env node */
 
-module.exports = function(environment) {
+module.exports = function (environment) {
   var ENV = {
     modulePrefix: 'ember-quickstart',
     environment: environment,
@@ -25,10 +25,17 @@ module.exports = function(environment) {
       storageBucket: "ember-app-f4f0c.appspot.com",
       messagingSenderId: "801914110900",
     },
-    APP: {
-
-    }
+    APP: {},
   };
+  ENV.contentSecurityPolicy = {
+    'default-src': "'none'",
+    'script-src': "'self'",
+    'font-src': "'self' http://fonts.gstatic.com",
+    'connect-src': "'self'",
+    'img-src': "'self' data:",
+    'media-src': "'self'"
+  }
+
 
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;

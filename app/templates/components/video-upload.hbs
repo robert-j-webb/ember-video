@@ -1,44 +1,9 @@
-
-{{yield}}
-<section class="experiment" style="padding: 5px;">
-  <p>Max video length is 30 seconds</p>
-  <br>
-  <br>
-
-  <button {{action 'start' }} disabled={{isNotRecording}} id="start">Start</button>
-  <button {{action 'cancel'}}disabled={{isRecording}}>Cancel</button>
-  <button {{action 'save'}}disabled={{isRecording}} id="save">Save</button>
-
-  <br>
-  <br>
-  <p id="result">{{success}}</p>
-  {{#if error}}
-  <p id="error">Error: {{error}}</p>
-  {{/if}}
-</section>
-
-<section class="experiment">
-  <div id="videos-container">
-    <video id="recording-video" class="{{if isRecording 'active' 'hidden'}}"></video>
-  </div>
-</section>
-
-<style>
-  input {
-    border: 1px solid rgb(46, 189, 235);
-    border-radius: 3px;
-    font-size: 1em;
-    outline: none;
-    padding: .2em .4em;
-    width: 60px;
-    text-align: center;
-  }
-  select {
-    vertical-align: middle;
-    line-height: 1;
-    padding: 2px 5px;
-    height: auto;
-    font-size: inherit;
-    margin: 0;
-  }
-</style>
+<div id="videos-container">
+</div>
+{{#paper-button action="start"}} start{{/paper-button}}
+{{#paper-button action="cancel"}} cancel{{/paper-button}}
+{{#paper-button action="save"}} save{{/paper-button}}
+<p id="result">{{success}}</p>
+{{#if error}}
+<p id="error">Error: {{error}}</p>
+{{/if}}

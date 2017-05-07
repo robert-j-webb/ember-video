@@ -1,9 +1,10 @@
 <div class="container">
-  <div class="menu">
-    <h1>
-      <em>Social Video</em>
-    </h1>
-  </div>
+  {{#paper-toolbar}}
+    <div class="md-toolbar-tools">
+      <h2>Social Video</h2>
+      {{#paper-button action="createThread"}}Create a Thread{{/paper-button}}
+    </div>
+  {{/paper-toolbar}}
   <div class="body">
     {{outlet}}
   </div>

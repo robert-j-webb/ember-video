@@ -34,7 +34,7 @@ module.exports = function (environment) {
     'connect-src': "'self'",
     'img-src': "'self' data:",
     'media-src': "'self'"
-  }
+  };
 
 
   if (environment === 'development') {

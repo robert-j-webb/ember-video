@@ -1,6 +1,7 @@
 import Ember from 'ember';
 /* global MediaRecorder  */
 export default Ember.Component.extend({
+  firebaseUpload: Ember.inject.service(),
   isRecording: true,
   isNotRecording: false,
   videoHeight: 480,
@@ -47,7 +48,7 @@ export default Ember.Component.extend({
     let videoWidth = this.get('videoWidth');
     let videoHeight = this.get('videoHeight');
     video.controls = false;
-    video.muted = false;
+    video.muted = true;
     video.width = videoWidth;
     video.height = videoHeight;
     if (window.URL) {
@@ -76,20 +77,21 @@ export default Ember.Component.extend({
       });
     },
     cancel(){
-      this.mediaRecorder.stop();
+      this.get('mediaRecorder').stop();
     },
     save(){
       this.toggleProperty('isRecording');
       this.toggleProperty('isNotRecording');
+      this.get('mediaRecorder').stop();
       Ember.run(() => {
-        this.mediaRecorder.stop();
         let videoContainer = document.getElementById('videos-container');
         while (videoContainer.hasChildNodes()) {
           videoContainer.removeChild(videoContainer.lastChild);
         }
         Ember.run(() => {
-          this.get('saveVideo')(new Blob(this.videoBlob.blob.toArray(), {type: 'video/webm'}));
-          this.set('success', `Recorded a video of length ${this.videoBlob.blob.length / 100}`);
+          let video = new Blob(this.videoBlob.blob.toArray(), {type: 'video/webm'});
+          this.get('firebaseUpload').upload(video, video.type,(url)=>
+            this.get('saveVideo')(url));
         });
       });
     }

@@ -1,7 +1,5 @@
 {
   "name": "ember-quickstart",
   "dependencies": {
-    "hammer.js": "^2.0.8",
-    "matchMedia": "0.2.0"
   }
 }

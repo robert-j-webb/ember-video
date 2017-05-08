@@ -1,5 +1,20 @@
+{{#paper-toolbar as |toolbar|}}
+  {{#toolbar.tools}}
+    <h3>Social Video</h3>
+    {{#paper-button onClick=(action "createThread")}}
+      Create a Thread
+    {{/paper-button}}
+    <span class="flex"></span>
+  {{/toolbar.tools}}
+{{/paper-toolbar}}
+<div>
+  
+</div>
+{{#if creating}}
+  {{create-thread createThread=(action "saveThread")}}
+{{/if}}
 <div id="feed" class="col-xs-12">
   {{#each model as |thread|}}
-    {{model.id}}
+    {{thread.id}}
   {{/each}}
 </div>

@@ -1,1 +1,9 @@
+// Define desired color palettes.
+$primary: "deep-orange";
+$accent: "pink";
+$warn: "yellow";
+
+// If desired, import the palettes and modify to your liking.
+@import "color-palette";
+
 @import 'ember-paper';

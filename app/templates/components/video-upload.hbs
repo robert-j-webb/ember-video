@@ -1,9 +1,11 @@
 <div id="videos-container">
 </div>
-{{#paper-button action="start"}} start{{/paper-button}}
-{{#paper-button action="cancel"}} cancel{{/paper-button}}
-{{#paper-button action="save"}} save{{/paper-button}}
-<p id="result">{{success}}</p>
+{{#paper-button onClick=(action "start")}} start{{/paper-button}}
+{{#paper-button onClick=(action "cancel")}} cancel{{/paper-button}}
+{{#paper-button onClick=(action "save")}} save{{/paper-button}}
+{{#if firebaseUpload.uploading}}
+{{paper-progress-linear value=firebaseUpload.progress}}
+{{/if}}
 {{#if error}}
 <p id="error">Error: {{error}}</p>
 {{/if}}

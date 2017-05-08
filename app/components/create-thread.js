@@ -1,21 +1,22 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  firebaseUpload: Ember.inject.service(),
   title: '',
   link: '',
+  videoUrl: null,
+  transcript: null,
   actions: {
-    saveVideo(video){
-      this.firebaseUpload.upload(video, video.type,(url)=>Ember.run(()=>{
-
-      }));
+    uploadDone(url){
+      this.set('videoUrl', url);
     },
     save(){
-
+      let thread = {
+        timestamp: new Date(),
+        title: this.get('title'),
+        link: this.get('link'),
+        video: this.get('url')
+      };
+      this.get('createThread')(thread);
     },
-    done() {
-      this.get('createThread')();
-
-    }
   }
 });

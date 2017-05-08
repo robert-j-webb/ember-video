@@ -10,18 +10,17 @@
     <span class="flex"></span>
   {{/toolbar.tools}}
 {{/paper-toolbar}}
-<div>
-
-</div>
 {{#if creating}}
   {{create-thread createThread=(action "saveThread") cancelThread=(action "toggleThread")}}
 {{/if}}
-<div id="feed" class="col-xs-12">
+<div id="feed" class="feed">
   {{#each model as |thread|}}
-    <h2>{{thread.title}}</h2>
-    {{#if thread.link}}
-      <a href={{thread.link}}>{{thread.link}}</a>
-    {{/if}}
-    <video muted loop controls src={{thread.video}} ></video>
+    <div class="thread">
+      <h2>{{thread.title}}</h2>
+      {{#if thread.link}}
+        <a href={{thread.link}}>{{thread.link}}</a>
+      {{/if}}
+      <video muted loop controls src={{thread.video}} ></video>
+    </div>
   {{/each}}
 </div>

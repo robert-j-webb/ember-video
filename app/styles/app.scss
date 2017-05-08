@@ -12,3 +12,25 @@ $warn: "yellow";
   color: color($primary, 'contrast');
   background-color: color($primary, '200');
 }
+body, .body {
+  background-color: color($primary, '100');
+  height: 100%;
+}
+.feed {
+  width: 650px;
+  margin: auto;
+  background-color: color($primary, '200');
+  color: white;
+}
+.thread{
+  h2{
+    text-align: center;
+  }
+  width: 100%;
+  margin: 5px;
+}
+.create-thread{
+  width: 650px;
+  margin: auto;
+  background-color: color($primary, '200');
+}

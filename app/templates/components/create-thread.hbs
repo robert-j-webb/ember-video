@@ -1,18 +1,19 @@
-{{#paper-form onSubmit=(action "save") as |form|}}
-  <div class="layout-row">
-    <div class="layout-column flex-50">
-      {{form.input label="Title" value=title onChange=(action (mut title)) required=true}}
-      {{form.input label="Link" value=link onChange=(action (mut link))}}
-      {{video-upload saveVideo=(action "uploadDone")}}
-    </div>
-  </div>
-  {{#if videoUrl}}
+<div class="create-thread">
+  {{#paper-form onSubmit=(action "save") as |form|}}
     <div class="layout-row">
-      {{#form.submit-button raised=true primary=true}}Submit{{/form.submit-button}}
+      <div class="layout-column flex-50">
+        {{form.input label="Title" value=title onChange=(action (mut title)) required=true}}
+        {{form.input label="Link" value=link onChange=(action (mut link))}}
+        {{video-upload saveVideo=(action "uploadDone")}}
+      </div>
     </div>
-  {{else}}
-    {{#paper-button disabled=true}}Upload a video to Submit{{/paper-button}}
-  {{/if}}
-  {{#paper-button warn onClick=(action "cancel")}}Cancel thread Create{{/paper-button}}
-
-{{/paper-form}}
+    {{#if videoUrl}}
+      <div class="layout-row">
+        {{#form.submit-button raised=true primary=true}}Submit{{/form.submit-button}}
+      </div>
+    {{else}}
+      {{#paper-button disabled=true}}Upload a video to Submit{{/paper-button}}
+    {{/if}}
+    {{#paper-button warn onClick=(action "cancel")}}Cancel thread Create{{/paper-button}}
+  {{/paper-form}}
+</div>

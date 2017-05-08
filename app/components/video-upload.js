@@ -7,6 +7,7 @@ export default Ember.Component.extend({
   videoHeight: 480,
   videoWidth: 640,
   mediaRecorder: null,
+  stream: null,
   index: 1,
   error: '',
   videoBlob: Ember.Object.create({
@@ -39,6 +40,7 @@ export default Ember.Component.extend({
     mediaRecorder.ondataavailable = (blob)=>this.handleDataAvailable(blob);
     mediaRecorder.start(10); // collect 10ms of data
     this.set('mediaRecorder', mediaRecorder);
+    this.set('stream', stream);
   },
   handleSuccess(stream){
     this.toggleProperty('isRecording');
@@ -65,6 +67,14 @@ export default Ember.Component.extend({
       this.videoBlob.blob.push(event.data);
     }
   },
+  stop(){
+    this.get('stream').getTracks().forEach((track) => track.stop());
+    this.get('mediaRecorder').stop();
+    let videoContainer = document.getElementById('videos-container');
+    while (videoContainer.hasChildNodes()) {
+      videoContainer.removeChild(videoContainer.lastChild);
+    }
+  },
   actions: {
     start(){
       navigator['mediaDevices'].getUserMedia({
@@ -77,22 +87,16 @@ export default Ember.Component.extend({
       });
     },
     cancel(){
-      this.get('mediaRecorder').stop();
+      this.stop();
     },
     save(){
       this.toggleProperty('isRecording');
       this.toggleProperty('isNotRecording');
-      this.get('mediaRecorder').stop();
+      this.stop();
       Ember.run(() => {
-        let videoContainer = document.getElementById('videos-container');
-        while (videoContainer.hasChildNodes()) {
-          videoContainer.removeChild(videoContainer.lastChild);
-        }
-        Ember.run(() => {
-          let video = new Blob(this.videoBlob.blob.toArray(), {type: 'video/webm'});
-          this.get('firebaseUpload').upload(video, video.type,(url)=>
-            this.get('saveVideo')(url));
-        });
+        let video = new Blob(this.videoBlob.blob.toArray(), {type: 'video/webm'});
+        this.get('firebaseUpload').upload(video, video.type,(url)=>
+          this.get('saveVideo')(url));
       });
     }
   }

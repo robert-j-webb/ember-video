@@ -7,3 +7,8 @@ $warn: "yellow";
 @import "color-palette";
 
 @import 'ember-paper';
+
+.accent {
+  color: color($primary, 'contrast');
+  background-color: color($primary, '200');
+}

@@ -2,8 +2,7 @@ import Ember from 'ember';
 /* global MediaRecorder  */
 export default Ember.Component.extend({
   firebaseUpload: Ember.inject.service(),
-  isRecording: true,
-  isNotRecording: false,
+  isRecording: false,
   videoHeight: 480,
   videoWidth: 640,
   mediaRecorder: null,
@@ -44,7 +43,6 @@ export default Ember.Component.extend({
   },
   handleSuccess(stream){
     this.toggleProperty('isRecording');
-    this.toggleProperty('isNotRecording');
     let videosContainer = document.getElementById('videos-container');
     let video = document.createElement('video');
     let videoWidth = this.get('videoWidth');
@@ -68,8 +66,10 @@ export default Ember.Component.extend({
     }
   },
   stop(){
-    this.get('stream').getTracks().forEach((track) => track.stop());
-    this.get('mediaRecorder').stop();
+    if(this.get('stream'))
+      this.get('stream').getTracks().forEach((track) => track.stop());
+    if(this.get('mediaRecorder').state !== 'inactive')
+      this.get('mediaRecorder').stop();
     let videoContainer = document.getElementById('videos-container');
     while (videoContainer.hasChildNodes()) {
       videoContainer.removeChild(videoContainer.lastChild);
@@ -91,7 +91,6 @@ export default Ember.Component.extend({
     },
     save(){
       this.toggleProperty('isRecording');
-      this.toggleProperty('isNotRecording');
       this.stop();
       Ember.run(() => {
         let video = new Blob(this.videoBlob.blob.toArray(), {type: 'video/webm'});

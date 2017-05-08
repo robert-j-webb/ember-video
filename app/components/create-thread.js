@@ -14,9 +14,12 @@ export default Ember.Component.extend({
         timestamp: new Date(),
         title: this.get('title'),
         link: this.get('link'),
-        video: this.get('url')
+        video: this.get('videoUrl')
       };
       this.get('createThread')(thread);
     },
+    cancel(){
+      this.get('cancelThread')();
+    }
   }
 });

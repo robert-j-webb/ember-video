@@ -1,9 +1,12 @@
 {{#paper-toolbar as |toolbar|}}
   {{#toolbar.tools}}
     <h3>Social Video</h3>
-    {{#paper-button onClick=(action "createThread")}}
-      Create a Thread
-    {{/paper-button}}
+    {{#if creating}}
+    {{else}}
+      {{#paper-button onClick=(action "toggleThread")}}
+        Create a Thread
+      {{/paper-button}}
+    {{/if}}
     <span class="flex"></span>
   {{/toolbar.tools}}
 {{/paper-toolbar}}
@@ -11,10 +14,14 @@
 
 </div>
 {{#if creating}}
-  {{create-thread createThread=(action "saveThread")}}
+  {{create-thread createThread=(action "saveThread") cancelThread=(action "toggleThread")}}
 {{/if}}
 <div id="feed" class="col-xs-12">
   {{#each model as |thread|}}
-    {{thread.id}}
+    <h2>{{thread.title}}</h2>
+    {{#if thread.link}}
+      <a href={{thread.link}}>{{thread.link}}</a>
+    {{/if}}
+    <video muted loop controls src={{thread.video}} ></video>
   {{/each}}
 </div>

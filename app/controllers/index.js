@@ -4,7 +4,7 @@ export default Ember.Controller.extend({
   firebaseUpload:  Ember.inject.service(),
   creating: false,
   actions: {
-    createThread(){
+    toggleThread(){
       this.toggleProperty('creating');
     },
     saveThread(thread){

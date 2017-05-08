@@ -13,4 +13,6 @@
   {{else}}
     {{#paper-button disabled=true}}Upload a video to Submit{{/paper-button}}
   {{/if}}
+  {{#paper-button warn onClick=(action "cancel")}}Cancel thread Create{{/paper-button}}
+
 {{/paper-form}}

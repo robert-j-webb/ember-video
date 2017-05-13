@@ -1,0 +1,15 @@
+{{#paper-form onSubmit=(action "save") as |form|}}
+  <div class="layout-row">
+    <div class="layout-column flex-50">
+      {{video-upload saveVideo=(action "uploadDone")}}
+    </div>
+  </div>
+  {{#if videoUrl}}
+    <div class="layout-row">
+      {{#form.submit-button raised=true primary=true}}Submit{{/form.submit-button}}
+    </div>
+  {{else}}
+    {{#paper-button disabled=true}}Upload a video to Submit{{/paper-button}}
+  {{/if}}
+  {{#paper-button warn onClick=(action "cancel")}}Cancel reply Create{{/paper-button}}
+{{/paper-form}}

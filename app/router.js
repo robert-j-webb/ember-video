@@ -9,6 +9,7 @@ const Router = Ember.Router.extend({
 Router.map(function() {
   this.route('login');
   this.route('contact');
+  this.route('thread',{ path: '/thread/:thread_id' });
 });
 
 export default Router;

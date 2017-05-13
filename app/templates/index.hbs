@@ -20,7 +20,10 @@
       {{#if thread.link}}
         <a href={{thread.link}}>{{thread.link}}</a>
       {{/if}}
-      <video muted loop controls src={{thread.video}} ></video>
+      {{ivy-videojs controls=true src=thread.video}}
+      {{#link-to 'thread' thread}}
+        Open Thread
+      {{/link-to}}
     </div>
   {{/each}}
 </div>

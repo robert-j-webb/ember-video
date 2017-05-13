@@ -1,0 +1,40 @@
+{{outlet}}
+<div class="col-xs-12 thread__header">
+  {{#paper-button raised=true warn=true}}Go Back{{/paper-button}}
+  {{#if replying}}
+  {{else}}
+    {{#paper-button raised=true primary=true onClick=(action "toggleReply")}}Reply{{/paper-button}}
+  {{/if}}
+</div>
+{{#if replying}}
+  <div class="create-reply">
+    {{create-reply createReply=(action "saveReply") cancelReply=(action "toggleReply")}}
+  </div>
+  <div class="thread__video">
+
+  </div>
+{{else}}
+  <div class="thread__video">
+    <div class="thread__title">
+      <h3>{{model.title}}</h3>
+    </div>
+    {{#if model.link}}
+      <div class="thread__link">
+        <a href={{model.link}}>{{model.link}}</a>
+      </div>
+    {{/if}}
+    {{ivy-videojs controls=true src=model.video}}
+  </div>
+  <div id="feed" class="feed">
+    {{#each model.replies as |reply|}}
+      <div class="reply">
+        {{reply.id}}
+        {{#if reply.link}}
+          <a href={{reply.link}}>{{reply.link}}</a>
+        {{/if}}
+        {{ivy-videojs controls=true src=reply.video}}
+      </div>
+    {{/each}}
+  </div>
+{{/if}}
+

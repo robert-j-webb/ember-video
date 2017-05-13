@@ -3,5 +3,7 @@ import DS from 'ember-data';
 const path = "replies/";
 
 export default DS.Model.extend({
-  video: DS.belongsTo('video')
+  timestamp: DS.attr('date'),
+  thread: DS.belongsTo('thread'),
+  video: DS.attr('string')
 });

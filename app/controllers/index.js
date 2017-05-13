@@ -10,6 +10,6 @@ export default Ember.Controller.extend({
     saveThread(thread){
       this.store.createRecord('thread', thread).save();
       this.toggleProperty('creating');
-    }
+    },
   }
 });

@@ -34,3 +34,24 @@ body, .body {
   margin: auto;
   background-color: color($primary, '200');
 }
+.thread{
+  &__header {
+    position: fixed;
+    height: 50px;
+    width: 100%;
+    background-color: color($primary, '600');
+  }
+  &__video{
+    position: fixed;
+    width: 640px;
+    height: 320px;
+    top: 50px;
+  }
+}
+.create-reply {
+  position: fixed;
+  top: 50px;
+  z-index: 1;
+  background-color: color($primary, '200');
+
+}

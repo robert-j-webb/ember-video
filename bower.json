@@ -1,5 +1,6 @@
 {
   "name": "ember-quickstart",
   "dependencies": {
+    "video.js": "~5.12"
   }
 }

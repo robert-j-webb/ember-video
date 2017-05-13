@@ -15,15 +15,31 @@
 {{/if}}
 <div id="feed" class="feed">
   {{#each model as |thread|}}
-    <div class="thread">
+    <div class="feed__item">
       <h2>{{thread.title}}</h2>
       {{#if thread.link}}
         <a href={{thread.link}}>{{thread.link}}</a>
       {{/if}}
       {{ivy-videojs controls=true src=thread.video}}
       {{#link-to 'thread' thread}}
-        Open Thread
+        {{#paper-button raised=true primary=true}}
+          Open Thread
+        {{/paper-button}}
       {{/link-to}}
+
+      <div class="feed__replies">
+        {{#if thread.replies}}
+          {{#each thread.replies as |reply|}}
+            <div class="feed__reply">
+              {{ivy-videojs fluid=true controls=true src=reply.video}}
+            </div>
+          {{/each}}
+        {{else}}
+          <div class="feed_reply">
+            No replies yet. Open the thread to reply.
+          </div>
+        {{/if}}
+        </div>
     </div>
   {{/each}}
 </div>

@@ -3,6 +3,7 @@ $primary: "deep-orange";
 $accent: "pink";
 $warn: "yellow";
 $break-md: 1280px;
+$break-thread: 1138px;
 
 // If desired, import the palettes and modify to your liking.
 @import "color-palette";
@@ -22,13 +23,35 @@ body, html, .body {
   margin: auto;
   background-color: color($primary, '200');
   color: white;
-}
-.thread{
-  h2{
-    text-align: center;
+
+  &__item{
+    h2{
+      text-align: center;
+    }
+    width: 100%;
+    margin: 5px;
+    height: 540px;
+    @media screen and (max-width: $break-thread) {
+      height: 650px;
+    }
   }
-  width: 100%;
-  margin: 5px;
+  &__replies{
+    div:nth-of-type(1n+4) {
+      display: none;
+    }
+  }
+  &__reply {
+    width: 230px;
+    margin-bottom: 6px;
+    position: relative;
+    top: -575px;
+    left: 650px;
+    @media screen and (max-width: $break-thread) {
+      position: static;
+      display: inline-block;
+      width: 210px;
+    }
+  }
 }
 .create-thread{
   width: 650px;

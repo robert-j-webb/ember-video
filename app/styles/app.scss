@@ -2,6 +2,7 @@
 $primary: "deep-orange";
 $accent: "pink";
 $warn: "yellow";
+$break-md: 1280px;
 
 // If desired, import the palettes and modify to your liking.
 @import "color-palette";
@@ -12,7 +13,7 @@ $warn: "yellow";
   color: color($primary, 'contrast');
   background-color: color($primary, '200');
 }
-body, .body {
+body, html, .body {
   background-color: color($primary, '100');
   height: 100%;
 }
@@ -47,11 +48,25 @@ body, .body {
     height: 320px;
     top: 50px;
   }
+  &__feed{
+    position: relative;
+    left: 650px;
+    top: 110px;
+    overflow-y: hidden;
+    width: 640px;
+    @media screen and (max-width: $break-md) {
+      top: 750px;
+      left: 0;
+    }
+  }
+  &__reply{
+    margin-bottom: 4px;
+    border-bottom: 1px solid black;
+  }
 }
 .create-reply {
   position: fixed;
   top: 50px;
   z-index: 1;
   background-color: color($primary, '200');
-
 }

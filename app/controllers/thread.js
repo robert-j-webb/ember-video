@@ -14,6 +14,9 @@ export default Ember.Controller.extend({
         reply.save();
       });
       this.toggleProperty('replying');
+    },
+    back(){
+      history.back();
     }
   }
 });

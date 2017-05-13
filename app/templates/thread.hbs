@@ -1,6 +1,6 @@
 {{outlet}}
 <div class="col-xs-12 thread__header">
-  {{#paper-button raised=true warn=true}}Go Back{{/paper-button}}
+  {{#paper-button raised=true warn=true onClick=(action "back")}}Go Back{{/paper-button}}
   {{#if replying}}
   {{else}}
     {{#paper-button raised=true primary=true onClick=(action "toggleReply")}}Reply{{/paper-button}}
@@ -25,10 +25,9 @@
     {{/if}}
     {{ivy-videojs controls=true src=model.video}}
   </div>
-  <div id="feed" class="feed">
+  <div class="thread__feed">
     {{#each model.replies as |reply|}}
-      <div class="reply">
-        {{reply.id}}
+      <div class="thread__reply">
         {{#if reply.link}}
           <a href={{reply.link}}>{{reply.link}}</a>
         {{/if}}

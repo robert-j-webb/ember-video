@@ -88,7 +88,6 @@ export default Ember.Component.extend({
     },
     cancel(){
       this.stop();
-      throw new Error("test error");
     },
     save(){
       this.toggleProperty('isRecording');

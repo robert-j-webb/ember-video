@@ -11,5 +11,17 @@ export default Ember.Controller.extend({
       this.store.createRecord('thread', thread).save();
       this.toggleProperty('creating');
     },
+    ready(player, component){
+      component.bindPropertyToPlayer(player, 'src');
+    },
+    loadedMetaData(player, component){
+      let h = player.videoHeight();
+      let w = player.videoWidth();
+      if(h > 540){
+        let ratio = w/h;
+        player.height(540);
+        player.width(540 * ratio);
+      }
+    }
   }
 });

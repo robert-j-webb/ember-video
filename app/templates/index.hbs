@@ -20,7 +20,9 @@
       {{#if thread.link}}
         <a href={{thread.link}}>{{thread.link}}</a>
       {{/if}}
-      {{ivy-videojs controls=true src=thread.video}}
+      <div class="feed__video">
+        {{ivy-videojs controls=true ready="ready" loadedmetadata="loadedMetaData" src=thread.video}}
+      </div>
       {{#link-to 'thread' thread}}
         {{#paper-button raised=true primary=true}}
           Open Thread

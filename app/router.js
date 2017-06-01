@@ -10,6 +10,11 @@ Router.map(function() {
   this.route('login');
   this.route('contact');
   this.route('thread',{ path: '/thread/:thread_id' });
+  this.route('mosaic',
+    function() {
+      this.route('mobile');
+    }
+  );
 });
 
 export default Router;

@@ -96,3 +96,20 @@ body, html, .body {
   z-index: 1;
   background-color: color($primary, '200');
 }
+.mosaic{
+  &__container{
+    width: 100vw;
+    height: 100vh;
+  }
+}
+.mobile{
+  &__container{
+    width: 23.6%;
+    height: 32.3%;
+    margin-top: 0.3%;
+    margin-left: 0.3%;
+    display: inline-block;
+    margin-bottom: 5px;
+    background-color: grey;
+  }
+}

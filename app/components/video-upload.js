@@ -42,7 +42,6 @@ export default Ember.Component.extend({
     this.set('stream', stream);
   },
   handleSuccess(stream){
-    this.toggleProperty('isRecording');
     let videosContainer = document.getElementById('videos-container');
     let video = document.createElement('video');
     let videoWidth = this.get('videoWidth');
@@ -58,7 +57,7 @@ export default Ember.Component.extend({
     }
     video.play();
     videosContainer.appendChild(video);
-    Ember.run(() => this.startRecording(stream));
+    this.set('stream', stream);
   },
   handleDataAvailable(event) {
     if (event.data && event.data.size > 0) {
@@ -75,16 +74,21 @@ export default Ember.Component.extend({
       videoContainer.removeChild(videoContainer.lastChild);
     }
   },
+  init() {
+    this._super(...arguments)
+    navigator['mediaDevices'].getUserMedia({
+      audio: true, // record both audio/video in Firefox/Chrome
+      video: {width: {exact: 640}, height: {exact: 480}}
+    }).
+    then((stream)=>this.handleSuccess(stream)).catch((e) => {
+      console.log(e);
+      this.set('error', e)
+    });
+  },
   actions: {
     start(){
-      navigator['mediaDevices'].getUserMedia({
-        audio: true, // record both audio/video in Firefox/Chrome
-        video: {width: {exact: 640}, height: {exact: 480}}
-      }).
-      then((stream)=>this.handleSuccess(stream)).catch((e) => {
-        console.log(e);
-        this.set('error', e)
-      });
+      this.toggleProperty('isRecording');
+      Ember.run(() => this.startRecording(this.get('stream')));
     },
     cancel(){
       this.stop();

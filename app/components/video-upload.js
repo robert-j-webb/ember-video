@@ -55,8 +55,8 @@ export default Ember.Component.extend({
     } else {
       video.src = stream;
     }
-    video.play();
     videosContainer.appendChild(video);
+    video.play();
     this.set('stream', stream);
   },
   handleDataAvailable(event) {
@@ -75,15 +75,17 @@ export default Ember.Component.extend({
     }
   },
   init() {
-    this._super(...arguments)
-    navigator['mediaDevices'].getUserMedia({
-      audio: true, // record both audio/video in Firefox/Chrome
-      video: {width: {exact: 640}, height: {exact: 480}}
-    }).
-    then((stream)=>this.handleSuccess(stream)).catch((e) => {
-      console.log(e);
-      this.set('error', e)
-    });
+    this._super(...arguments);
+    Ember.run.later(()=> {
+      navigator['mediaDevices'].getUserMedia({
+        audio: true, // record both audio/video in Firefox/Chrome
+        video: true
+      }).then((stream) => Ember.run(()=>this.handleSuccess(stream))).catch((e) => {
+        console.log(e);
+        this.set('error', e)
+      })
+    },1500);
+
   },
   actions: {
     start(){

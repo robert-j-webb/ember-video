@@ -1,17 +1,17 @@
-{{#each model as |item|}}
+{{#each newestItems as |item|}}
   <div class="mobile__container">
     {{#paper-button raised=true primary=true onClick=(action "newVideo" item.order)}}
-      Record
+      Replace {{item.order}}
     {{/paper-button}}
-    {{item.order}}
     {{#if item.video}}
       <div class="feed__video">
-        {{ivy-videojs controls=true src=item.video}}
+        {{ivy-videojs fluid=true controls=true src=item.video}}
       </div>
     {{/if}}
   </div>
 {{/each}}
-
+{{model.length}}
+{{sortedModel.length}}
 {{#if showNewVideo}}
   {{#paper-dialog fullscreen=fullscreen onClose=(action "closeNewVideo" "cancel") origin=dialogOrigin}}
 
@@ -22,7 +22,7 @@
     {{#paper-dialog-actions class="layout-row"}}
       <span class="flex"></span>
       {{#paper-button raised=true primary=true onClick=(action "save")}}Submit{{/paper-button}}
-      {{#paper-button warn onClick=(action "cancel")}}Cancel{{/paper-button}}
+      {{#paper-button warn onClick=(action "closeNewVideo")}}Cancel{{/paper-button}}
     {{/paper-dialog-actions}}
 
   {{/paper-dialog}}

@@ -37,6 +37,7 @@ body, html, .body {
   }
   &__video{
     margin: auto;
+
   }
   &__replies{
     div:nth-of-type(1n+4) {
@@ -109,7 +110,24 @@ body, html, .body {
     margin-top: 0.3%;
     margin-left: 0.3%;
     display: inline-block;
-    margin-bottom: 5px;
     background-color: grey;
+    button {
+      position: relative;
+      z-index: 1;
+      top: 100px;
+      @media(min-width: 1024px) {
+        top: 188px;
+      }
+      @media(max-width: 425px) {
+        top: 125px;
+      }
+    }
+    .feed__video{
+      top: -48px;
+      position: relative;
+    }
+    @media(min-width: 1024px) {
+      height: 38.3%
+    }
   }
 }

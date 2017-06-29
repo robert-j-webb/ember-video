@@ -1767,6 +1767,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("ember-quickstart/app")["default"].create({"name":"ember-quickstart","version":"0.0.0+b2308a7f"});
+  require("ember-quickstart/app")["default"].create({"name":"ember-quickstart","version":"0.0.0+a0ab7ae8"});
 }
 //# sourceMappingURL=ember-quickstart.map

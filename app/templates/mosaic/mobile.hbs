@@ -5,7 +5,7 @@
     {{/paper-button}}
     {{#if item.video}}
       <div class="feed__video">
-        {{ivy-videojs fluid=true controls=true src=item.video}}
+        {{ivy-videojs fluid=true controls=true play=(action "fullscreen") src=item.video}}
       </div>
     {{/if}}
   </div>
@@ -16,12 +16,16 @@
   {{#paper-dialog fullscreen=fullscreen onClose=(action "closeNewVideo" "cancel") origin=dialogOrigin}}
 
     {{#paper-dialog-content}}
-      {{video-upload saveVideo=(action "uploadDone")}}
+      {{video-upload saveVideo=(action "uploadDone") }}
     {{/paper-dialog-content}}
 
     {{#paper-dialog-actions class="layout-row"}}
       <span class="flex"></span>
-      {{#paper-button raised=true primary=true onClick=(action "save")}}Submit{{/paper-button}}
+      {{#if canSubmit}}
+        {{#paper-button raised=true primary=true onClick=(action "save")}}Submit{{/paper-button}}
+        {{else }}
+        {{#paper-button disabled=true}}Submit{{/paper-button}}
+      {{/if}}
       {{#paper-button warn onClick=(action "closeNewVideo")}}Cancel{{/paper-button}}
     {{/paper-dialog-actions}}
 

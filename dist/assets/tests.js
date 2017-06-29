@@ -128,7 +128,7 @@ define('ember-quickstart/tests/controllers/mosaic/mobile.lint-test', ['exports']
   QUnit.module('ESLint - controllers/mosaic/mobile.js');
   QUnit.test('should pass ESLint', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'controllers/mosaic/mobile.js should pass ESLint.\n');
+    assert.ok(false, 'controllers/mosaic/mobile.js should pass ESLint.\n41:7  - \'$\' is not defined. (no-undef)\n42:7  - \'$\' is not defined. (no-undef)\n43:7  - \'$\' is not defined. (no-undef)\n43:40  - \'e\' is defined but never used. (no-unused-vars)\n44:9  - \'$\' is not defined. (no-undef)\n45:9  - \'$\' is not defined. (no-undef)\n47:9  - \'$\' is not defined. (no-undef)');
   });
 });
 define('ember-quickstart/tests/controllers/thread.lint-test', ['exports'], function (exports) {

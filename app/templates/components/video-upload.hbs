@@ -1,4 +1,9 @@
 <div id="videos-container">
+  {{#if isRecording}}
+  <div class="recording-icon">
+    {{paper-icon "fiber_smart_record"}}
+  </div>
+  {{/if}}
 </div>
 {{#if isRecording}}
   {{#paper-button warn onClick=(action "cancel")}} cancel{{/paper-button}}

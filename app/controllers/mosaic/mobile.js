@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  canSubmit: false,
   showNewVideo: false,
   videoUrl: null,
   order: [],
@@ -17,6 +18,7 @@ export default Ember.Controller.extend({
   actions: {
     uploadDone(url){
       this.set('videoUrl', url);
+      this.set('canSubmit', true);
     },
     save(){
       let mobile = {
@@ -33,7 +35,17 @@ export default Ember.Controller.extend({
     },
     closeNewVideo(){
       this.set('showNewVideo', false);
-
+    },
+    fullscreen(player,b,event){
+      let container = event.target.parentElement.parentElement;
+      $(container).addClass("fullscreen");
+      $("#overlay").show();
+      $(document).on('keyup',(function(e) {
+        $(container).removeClass("fullscreen");
+        $("#overlay").hide();
+        player.pause();
+        $(document).off('keyup');
+      }));
     }
   }
 });

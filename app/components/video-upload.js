@@ -103,6 +103,10 @@ export default Ember.Component.extend({
       this.stop();
       Ember.run(() => {
         let video = new Blob(this.videoBlob.blob.toArray(), {type: 'video/webm'});
+        if(video.size === 0){
+          this.set('error', "Your video failed to record. Please try updating your browser or using a different one.");
+          return;
+        }
         this.get('firebaseUpload').upload(video, video.type,(url)=>
           this.get('saveVideo')(url));
       });

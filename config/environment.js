@@ -2,7 +2,7 @@
 
 module.exports = function (environment) {
   var ENV = {
-    modulePrefix: 'ember-video',
+    modulePrefix: 'ember-quickstart',
     environment: environment,
     rootURL: '/',
     locationType: 'auto',

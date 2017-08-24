@@ -9,7 +9,7 @@
   {{#paper-button warn onClick=(action "cancel")}} cancel{{/paper-button}}
   {{#paper-button primary onClick=(action "save")}} save{{/paper-button}}
 {{else}}
-  {{#paper-button primary onClick=(action "start")}} start recording{{/paper-button}}
+  {{#paper-button primary onClick=(action "start") id="start"}} start recording{{/paper-button}}
 {{/if}}
 {{#if firebaseUpload.uploading}}
 {{paper-progress-linear value=firebaseUpload.progress}}

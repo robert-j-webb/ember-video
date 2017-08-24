@@ -14,7 +14,7 @@ export default Ember.Controller.extend({
     ready(player, component){
       component.bindPropertyToPlayer(player, 'src');
     },
-    loadedMetaData(player, component){
+    loadedMetaData(player){
       let h = player.videoHeight();
       let w = player.videoWidth();
       if(h > 540){

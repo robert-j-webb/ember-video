@@ -5,21 +5,19 @@ moduleForComponent('create-reply', 'Integration | Component | create reply', {
   integration: true
 });
 
-test('it renders', function(assert) {
+test('create reply renders', function(assert) {
 
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
   this.render(hbs`{{create-reply}}`);
 
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.$().text().trim(), `start recording
 
-  // Template block usage:
-  this.render(hbs`
-    {{#create-reply}}
-      template block text
-    {{/create-reply}}
-  `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+    
+  
+      Upload a video to Submit
+
+    Cancel reply Create`);
 });

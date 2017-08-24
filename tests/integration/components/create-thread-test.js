@@ -12,14 +12,36 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{create-thread}}`);
 
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.$().text().trim(), `Title
 
-  // Template block usage:
-  this.render(hbs`
-    {{#create-thread}}
-      template block text
-    {{/create-thread}}
-  `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  
+
+  
+  
+
+
+
+
+          Link
+
+
+  
+
+  
+  
+
+
+
+
+        
+
+     start recording
+
+
+      
+    
+        Upload a video to Submit
+
+      Cancel thread Create`);
 });

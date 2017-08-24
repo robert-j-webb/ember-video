@@ -17,13 +17,10 @@ export default Ember.Component.extend({
     this.videoBlob.blob = Ember.A([]);
     let options = {mimeType: 'video/webm;codecs=vp9'};
     if (!MediaRecorder['isTypeSupported'](options.mimeType)) {
-      console.log(options.mimeType + ' is not Supported');
       options = {mimeType: 'video/webm;codecs=vp8'};
       if (!MediaRecorder['isTypeSupported'](options.mimeType)) {
-        console.log(options.mimeType + ' is not Supported');
         options = {mimeType: 'video/webm'};
         if (!MediaRecorder['isTypeSupported'](options.mimeType)) {
-          console.log(options.mimeType + ' is not Supported');
           options = {mimeType: ''};
         }
       }
@@ -32,7 +29,7 @@ export default Ember.Component.extend({
     try {
       mediaRecorder = new MediaRecorder(stream, options);
     } catch (e) {
-      console.error('Exception while creating MediaRecorder: ' + e);
+      Ember.logger.error('Exception while creating MediaRecorder: ' + e);
       this.set('error',e);
       return;
     }
@@ -67,10 +64,10 @@ export default Ember.Component.extend({
   stop(){
     if(this.get('stream'))
       this.get('stream').getTracks().forEach((track) => track.stop());
-    if(this.get('mediaRecorder').state !== 'inactive')
+    if(this.get('mediaRecorder') && this.get('mediaRecorder').state !== 'inactive')
       this.get('mediaRecorder').stop();
     let videoContainer = document.getElementById('videos-container');
-    while (videoContainer.hasChildNodes()) {
+    while (videoContainer && videoContainer.hasChildNodes()) {
       videoContainer.removeChild(videoContainer.lastChild);
     }
   },

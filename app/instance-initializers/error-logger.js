@@ -7,11 +7,11 @@ export function initialize(application) {
   Ember.onerror = (error) => {
     store.createRecord('error', {msg: error}).save();
     // Ember.get('store').createRecord('error', {msg: error}).save();
-    console.error(error);
+    Ember.logger.error(error);
   };
   Ember.RSVP.on('error', (error) => {
     store.createRecord('error', {msg: error}).save();
-    console.error(error);
+    Ember.logger.error(error);
   });
 }
 
